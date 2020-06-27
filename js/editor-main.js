@@ -1,6 +1,7 @@
 /*! Receipt Designer for ePOS SDK Copyright Seiko Epson Corporation 2016 - 2017 All rights reserved. */
 var tabindex = 0;
 $(function () {
+
     var h = window.localStorage,
         e, a, d;
     var c, b, f, g;
@@ -68,6 +69,11 @@ $(function () {
             }
         }
     }
+
+    $("#run").click(function () {
+        updateAll();
+    })
+
     $("#tabs").tabs({
         select: function (i, j) {
             switch (tabindex) {
@@ -98,22 +104,28 @@ $(function () {
                     break
             }
             switch (j.index) {
+                // case 1:
+                //     try {
+                //         drawPreview()
+                //     } catch (k) {
+                //         $("#edit-info").text(k.message);
+                //         $("#edit-error").dialog("open");
+                //         return false
+                //     }
+                //     break;
+                // case 2:
+                //     setApiCode();
+                //     break;
+                // case 3:
+                //     setXmlDoc();
+                //     break;
+                // case 4:
+                //     setPrintDoc(getXmlDoc());
+                //     break;
                 case 1:
-                    try {
-                        drawPreview()
-                    } catch (k) {
-                        $("#edit-info").text(k.message);
-                        $("#edit-error").dialog("open");
-                        return false
-                    }
-                    break;
-                case 2:
                     setApiCode();
                     break;
-                case 3:
-                    setXmlDoc();
-                    break;
-                case 4:
+                case 2:
                     setPrintDoc(getXmlDoc());
                     break;
                 default:
@@ -123,6 +135,12 @@ $(function () {
         },
         selected: tabindex
     });
+
+    $("#print-now").button().click(function () {
+        setPrintDoc(getXmlDoc());
+        sendPrintDoc()
+    });
+
     $("#edit-left").disableSelection().draggable({
         axis: "y",
         containment: "parent"
@@ -132,9 +150,11 @@ $(function () {
     }, function () {
         $(this).removeClass("ui-state-highlight")
     }).click(function () {
+        console.log('click element');
         var i = $(this).clone();
         $("#edit-sequence").append(i);
-        extract(i)
+        extract(i);
+        updateAll();
     }).draggable({
         connectToSortable: "#edit-sequence",
         helper: "clone"
@@ -159,7 +179,8 @@ $(function () {
                 $("#edit-force").removeAttr("checked");
                 $("#edit-left").css({
                     top: 0
-                })
+                });
+                updateAll();
             }
         }, {
             text: message.no,
@@ -203,6 +224,7 @@ $(function () {
             click: function () {
                 $(this).dialog("close");
                 importDoc();
+                updateAll();
                 $("#edit-left").css({
                     top: 0
                 })
@@ -251,6 +273,7 @@ $(function () {
     $("#print-send").button().click(function () {
         sendPrintDoc()
     });
+
     $("#print-clear").button().click(function () {
         $("#print-info").val("")
     });
@@ -328,6 +351,12 @@ $(function () {
     connectPrinter()
 });
 
+function updateAll() {
+    drawPreview();
+    exportDoc();
+    setXmlDoc();
+}
+
 function extract(a) {
     a.find("button").button({
         icons: {
@@ -336,7 +365,9 @@ function extract(a) {
         text: false
     }).click(function () {
         a.fadeOut("fast", function () {
-            $(this).remove()
+            $(this).remove();
+            console.log('remove element');
+            updateAll();
         })
     });
     a.find(".attr-text-linespc, .attr-feed-unit, .attr-feed-line, .attr-sound-repeat").each(function () {

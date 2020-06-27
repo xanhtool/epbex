@@ -82,7 +82,11 @@ textarea {
 }
 #edit-right {
     float: left;
-    width: 75%;
+    width: 40%;
+}
+#edit-preview {
+    float: right;
+    width: 25%;
 }
 #edit-sequence {
     background-color: #c0c0c0;
@@ -105,4 +109,10 @@ textarea {
 #preview-info, #setting-version {
     color: #808080;
     font-size: x-small;
+}
+#run {
+    margin-left: 5rem;
+    height: 3rem;
+    width: 7rem;
+    font-size: 1.5rem;
 }

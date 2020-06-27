@@ -30,14 +30,17 @@
 
         <ul>
             <li><a href="#edit">Edit</a></li>
-            <li><a href="#preview">Preview</a></li>
+            <!-- <li><a href="#preview">Preview</a></li> -->
             <li><a href="#api">API</a></li>
-            <li><a href="#xml">XML</a></li>
+            <!-- <li><a href="#xml">XML</a></li> -->
             <li><a href="#print">Print</a></li>
             <li><a href="#setting">Setting</a></li>
         </ul>
 
         <div id="edit">
+
+
+
             <div id="edit-left">
 
                 <div class="edit-category ui-state-default ui-corner-all">
@@ -1200,7 +1203,42 @@
                 </div>
             </div>
 
+            <button id="run"> Run </button>
+            <button id="print-now"> Print Now </button>
+
+            <div id="edit-preview">
+                <div id="preview-paper">
+                    <div id="preview-width">
+                        <span>512</span><br />
+                        <img src="img/v.png" alt="" /><img src="img/h.png" width="510" height="10" alt="" /><img
+                            src="img/v.png" alt="" /><br />
+                    </div>
+                </div>
+                <div class="preview-break"></div>
+                <canvas id="preview-rotate" width="576" height="2400"></canvas>
+                <canvas class="preview-line" id="preview-line" width="1" height="1"></canvas>
+                <canvas id="preview-text" width="576" height="192"></canvas>
+                <canvas id="preview-page" width="576" height="2400"></canvas>
+                <canvas id="preview-area" width="576" height="2400"></canvas>
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <div id="preview-info">
+                    Actual print result from the printer may differ from the preview image.
+                </div>
+            </div>
+
             <div class="edit-break"></div>
+
+            <div id="xml">
+                <p>
+                    XML Print Document<br />
+                    <textarea id="xml-doc" cols="60" rows="30"></textarea>
+                </p>
+            </div>
+
 
         </div>
 
@@ -1229,29 +1267,8 @@
             <p id="edit-info"></p>
         </div>
 
-        <div id="preview">
-            <div id="preview-paper">
-                <div id="preview-width">
-                    <span>512</span><br />
-                    <img src="img/v.png" alt="" /><img src="img/h.png" width="510" height="10" alt="" /><img
-                        src="img/v.png" alt="" /><br />
-                </div>
-            </div>
-            <div class="preview-break"></div>
-            <canvas id="preview-rotate" width="576" height="2400"></canvas>
-            <canvas class="preview-line" id="preview-line" width="1" height="1"></canvas>
-            <canvas id="preview-text" width="576" height="192"></canvas>
-            <canvas id="preview-page" width="576" height="2400"></canvas>
-            <canvas id="preview-area" width="576" height="2400"></canvas>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <div id="preview-info">
-                Actual print result from the printer may differ from the preview image.
-            </div>
-        </div>
+
+
 
         <div id="api">
             <p>
@@ -1260,12 +1277,8 @@
             </p>
         </div>
 
-        <div id="xml">
-            <p>
-                XML Print Document<br />
-                <textarea id="xml-doc" cols="60" rows="30"></textarea>
-            </p>
-        </div>
+
+
 
         <div id="print">
             <p>
@@ -1325,7 +1338,7 @@
             <h3>Print</h3>
             <p>
                 IP address of the printer<br />
-                <input id="setting-ipaddr" type="text" value="192.168.192.168" />
+                <input id="setting-ipaddr" type="text" value="192.168.26.111" />
             </p>
             <p>
                 Port number<br />
