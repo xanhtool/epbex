@@ -2,6 +2,13 @@
 
 // Model Information
 var modelinfo = {
+    bookable: {
+        width: 580,
+        linespc: 30,
+        ank: { font_a: 24, font_b: 18, font_c: 0, font_d: 0, font_e: 0, special_a: 24, special_b: 18 },
+        kanji: { font_a: 24, font_b: 0, font_c: 0, font_d: 0, font_e: 0, special_a: 0, special_b: 0 },
+        page: { ini_w: 580, ini_h: 831, max_w: 580, max_h: 1662 }
+    },
     tm_t88_80: {
         width: 512,
         linespc: 30,
