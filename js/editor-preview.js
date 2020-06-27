@@ -57,7 +57,7 @@ var dir_convert = {
         w: false
     }
 };
-var model = modelinfo.tm_t88_80;
+var model = modelinfo.bookable;
 var align = "left";
 var linespc = 30;
 var rotate = false;
