@@ -79,11 +79,12 @@ textarea {
 #edit-left {
     float: left;
     width: 25%;
+    position: fixed;
 }
 #edit-right {
     float: left;
     width: 40%;
-    transform: translateX(1rem);
+    margin-left: 26%;
 }
 #edit-preview {
     float: right;
