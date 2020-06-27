@@ -110,9 +110,16 @@ textarea {
     color: #808080;
     font-size: x-small;
 }
-#run {
-    margin-left: 5rem;
+
+.action-list {
+    position: absolute;
+    top: 0;
+    right: 1rem;
+}
+
+.action-list button {
+    margin-left: 2.5rem;
     height: 3rem;
-    width: 7rem;
-    font-size: 1.5rem;
+    width: 8rem;
+    font-size: 1rem;
 }
