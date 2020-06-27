@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Receipt Designer for ePOS SDK</title>
+
+    <link type="text/css" href="css/smoothness/jquery-ui-1.8.18.custom.css" rel="stylesheet" />
+    <link type="text/css" href="css/epos-print-editor.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="js/jquery-ui-1.8.18.custom.min.js"></script>
+    <script type="text/javascript" src="js/jquery.ui.touch-punch.min.js"></script>
+    <script type="text/javascript" src="js/epos-2.14.0.js"></script>
+    <script type="text/javascript" src="js/epos-print-editor-ja.js"></script>
+    <script type="text/javascript" src="js/editor-main.js"></script>
+    <script type="text/javascript" src="js/editor-import.js"></script>
+    <script type="text/javascript" src="js/editor-export.js"></script>
+    <script type="text/javascript" src="js/editor-preview.js"></script>
+    <script type="text/javascript" src="js/editor-print.js"></script>
+</head>
+<body>
+
+<div id="tabs">
+
+    <ul>
+        <li><a href="#edit">編集</a></li>
+        <li><a href="#preview">プレビュー</a></li>
+        <li><a href="#api">API</a></li>
+        <li><a href="#xml">XML</a></li>
+        <li><a href="#print">印刷</a></li>
+        <li><a href="#setting">設定</a></li>
+    </ul>
+
+    <div id="edit">
+        <div id="edit-left">
+
+            <div class="edit-category ui-state-default ui-corner-all">
+                共通<br />
+                <div class="edit-item">
+                    <ul>
+                        <!-- 位置揃え -->
+                        <li class="epos-text-align edit-icon ui-state-default">
+                            <div class="edit-caption">
+                                <img src="img/text-align.png" alt="text-align" /><br />
+                                位置揃え
+                            </div>
+                            <div class="edit-content">
+                                位置揃え
+                                <select class="attr-text-align">
+                                    <option value="ALIGN_LEFT" selected="selected">左揃え</option>
+                                    <option value="ALIGN_CENTER">中央揃え</option>
+                                    <option value="ALIGN_RIGHT">右揃え</option>
+                                </select>
+                            </div>
+                            <div class="edit-remove">
+                                <button>削除</button>
+                            </div>
+                            <div class="edit-break"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="edit-item">
+                    <ul>
+                        <!-- 改行量 -->
+                        <li class="epos-text-linespc edit-icon ui-state-default">
+                            <div class="edit-caption">
+                                <img src="img/text-linespc.png" alt="text-linespc" /><br />
+                                改行量
+                            </div>
+                            <div class="edit-content">
+                                ドット数
+                                <input class="attr-text-linespc" type="text" size="5" value="30" /> dots<div class="slider"></div>
+                            </div>
+                            <div class="edit-remove">
+                                <button>削除</button>
+                            </div>
+                            <div class="edit-break"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="edit-item">
+                    <ul>
+                        <!-- 倒立印字 -->
+                        <li class="epos-text-rotate edit-icon ui-state-default">
+                            <div class="edit-caption">
+                                <img src="img/text-rotate.png" alt="text-rotate" /><br />
+                                倒立印字
+                            </div>
+                            <div class="edit-content">
+                                <label><input class="attr-text-rotate" type="checkbox" checked="checked" />倒立印字</label>
+                            </div>
+                            <div class="edit-remove">
+                                <button>削除</button>
+                            </div>
+                            <div class="edit-break"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="edit-break"></div>
+            </div>
+
+            <div class="edit-category ui-state-default ui-corner-all">
+                文字 (内蔵フォント)<br />
+                <div class="edit-item">
+                    <ul>
+                        <!-- 言語 -->
+                        <li class="epos-text-lang edit-icon ui-state-default">
+                            <div class="edit-caption">
+                                <img src="img/text-lang.png" alt="text-lang" /><br />
+                                言語
+                            </div>
+                            <div class="edit-content">
+                                言語
+                                <select class="attr-text-lang">
+                                    <option value="en">ANK</option>
+                                    <option value="ja" selected="selected">日本語</option>                                   
+                                    <option value="ko">韓国語</option>
+                                    <option value="zh-cn">簡体字中国語</option>
+                                    <option value="zh-hans">簡体字中国語 [v2.2-]</option>
+                                    <option value="zh-tw">繁体字中国語</option>
+                                    <option value="zh-hant">繁体字中国語 [v2.2-]</option>
+                                    <option value="mul">マルチランゲージ</option>                                    
+                                </select>
+                            </div>
+                            <div class="edit-remove">
+                                <button>削除</button>
+                            </div>
+                            <div class="edit-break"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="edit-item">
+                    <ul>
+                        <!-- フォント -->
+                        <li class="epos-text-font edit-icon ui-state-default">
+                            <div class="edit-caption">
+                                <img src="img/text-font.png" alt="text-font" /><br />
+                                フォント
+                            </div>
+                            <div class="edit-content">
+                                種類
+                                <select class="attr-text-font">
+                                    <option value="FONT_A" selected="selected">フォントA</option>
+                                    <option value="FONT_B">フォントB</option>
+                                    <option value="FONT_C">フォントC</option>
+                                    <option value="FONT_D">フォントD [v2.6-]</option>
+                                    <option value="FONT_E">フォントE [v2.6-]</option>
+                                    <option value="FONT_SPECIAL_A">スペシャルフォントA</option>
+                                    <option value="FONT_SPECIAL_B">スペシャルフォントB</option>
+                                </select>
+                            </div>
+                            <div class="edit-remove">
+                                <button>削除</button>
+                            </div>
+                            <div class="edit-break"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="edit-item">
+                    <ul>
+                        <!-- 横位置 -->
+                        <li class="epos-text-position edit-icon ui-state-default">
+                            <div class="edit-caption">
+                                <img src="img/text-position.png" alt="text-position" /><br />
+                                横位置
+                            </div>
+                            <div class="edit-content">
+                                横方向位置
+                                <input class="attr-text-x" type="text" size="5" value="0" /> dots<div class="slider"></div>
+                            </div>
+                            <div class="edit-remove">
+                                <button>削除</button>
+                            </div>
+                            <div class="edit-break"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="edit-item">
+                    <ul>
+                        <!-- 縦位置 -->
+                        <li class="epos-text-vposition edit-icon ui-state-default">
+                            <div class="edit-caption tooltip-text">
+                                <img src="img/text-vposition.png" alt="text-vposition" /><br />
+                                縦位置
+                                <span class="tooltip">[v2.2-]</span>
+                            </div>
+                            <div class="edit-content">
+                                縦方向位置
+                                <input class="attr-text-y" type="text" size="5" value="21" /> dots<div class="slider"></div>
+                            </div>
+                            <div class="edit-remove">
+                                <button>削除</button>
+                            </div>
+                            <div class="edit-break"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="edit-item">
+                    <ul>
+                        <!-- スムージング -->
+                        <li class="epos-text-smooth edit-icon ui-state-default">
+                            <div class="edit-caption">
+                                <img src="img/text-smooth.png" alt="text-smooth" /><br />
+                                ｽﾑｰｼﾞﾝｸﾞ
+                            </div>
+                            <div class="edit-content">
+                                <label><input class="attr-text-smooth" type="checkbox" checked="checked" />スムージング</label>
+                            </div>
+                            <div class="edit-remove">
+                                <button>削除</button>
+                            </div>
+                            <div class="edit-break"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="edit-item">
+                    <ul>
+                        <!-- 倍率 -->
+                        <li class="epos-text-size edit-icon ui-state-default">
+                            <div class="edit-caption">
+                                <img src="img/text-size.png" alt="text-size" /><br />
+                                倍率
+                            </div>
+                            <div class="edit-content">
+                                横方向
+                                <input class="attr-text-width" type="text" size="5" value="1" ><div class="slider"></div>
+                                縦方向
+                                <input class="attr-text-height" type="text" size="5" value="1" ><div class="slider"></div>
+                            </div>
+                            <div class="edit-remove">
+                                <button>削除</button>
+                            </div>
+                            <div class="edit-break"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="edit-item">
+                    <ul>
+                        <!-- 倍角 -->
+                        <li class="epos-text-double edit-icon ui-state-default">
+                            <div class="edit-caption">
+                                <img src="img/text-double.png" alt="text-double" /><br />
+                                倍角
+                            </div>
+                            <div class="edit-content">
+                                <label><input class="attr-text-dw" type="checkbox" checked="checked" />横倍角</label><br />
+                                <label><input class="attr-text-dh" type="checkbox" checked="checked" />縦倍角</label>
+                            </div>
+                            <div class="edit-remove">
+                                <button>削除</button>
+                            </div>
+                            <div class="edit-break"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="edit-item">
+                    <ul>
+                        <!-- 文字装飾 -->
+                        <li class="epos-text-style edit-icon ui-state-default">
+                            <div class="edit-caption">
+                                <img src="img/text-style.png" alt="text-style" /><br />
+                                装飾
+                            </div>
+                            <div class="edit-content">
+                                <label><input class="attr-text-reverse" type="checkbox" />白黒反転</label>
+                                <label><input class="attr-text-ul" type="checkbox" />アンダーライン</label>
+                                <label><input class="attr-text-em" type="checkbox" />強調</label>
+                                <br />
+                                色指定
+                                <select class="attr-text-color">
+                                    <option value="COLOR_NONE">非印字</option>
+                                    <option value="COLOR_1" selected="selected">第1色</option>
+                                    <option value="COLOR_2">第2色</option>
+                                    <option value="COLOR_3">第3色</option>
+                                    <option value="COLOR_4">第4色</option>
+                                </select>
+                            </div>
+                            <div class="edit-remove">
+                                <button>削除</button>
+                            </div>
+                            <div class="edit-break"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="edit-item">
+                    <ul>
+                        <!-- 文字 -->
+                        <li class="epos-text edit-icon ui-state-default">
+                            <div class="edit-caption">
+                                <img src="img/text.png" alt="text" /><br />
+                                文字
+                            </div>
+                            <div class="edit-content">
+                                <input class="attr-text-data tooltip-text" type="text" value="Hello\n" /><br />
+                                <span class="tooltip">水平タブ(HT): '\t', 改行(LF): '\n', 復帰(CR): '\r', バックスラッシュ: '\\'</span>
+                            </div>
+                            <div class="edit-remove">
+                                <button>削除</button>
+                            </div>
+                            <div class="edit-break"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="edit-break"></div>
+            </div>
+
+            <div class="edit-category ui-state-default ui-corner-all">
+                紙送り<br />
+                <div class="edit-item">
+                    <ul>
+                        <!-- ドット単位 -->
+                        <li class="epos-feed-unit edit-icon ui-state-default">
+                            <div class="edit-caption">
+                                <img src="img/feed-unit.png" alt="feed-unit" /><br />
+                                ﾄﾞｯﾄ単位
+                            </div>
+                            <div class="edit-content">
+                                ドット数
+                                <input class="attr-feed-unit" type="text" size="5" value="30" /> dots<div class="slider"></div>
+                            </div>
+                            <div class="edit-remove">
+                                <button>削除</button>
+                            </div>
+                            <div class="edit-break"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="edit-item">
+                    <ul>
+                        <!-- 行単位 -->
+                        <li class="epos-feed-line edit-icon ui-state-default">
+                            <div class="edit-caption">
+                                <img src="img/feed-line.png" alt="feed-line" /><br />
+                                行単位
+                            </div>
+                            <div class="edit-content">
+                                行数
+                                <input class="attr-feed-line" type="text" size="5" value="3" /> lines<div class="slider"></div>
+                            </div>
+                            <div class="edit-remove">
+                                <button>削除</button>
+                            </div>
+                            <div class="edit-break"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="edit-item">
+                    <ul>
+                        <!-- 改行 -->
+                        <li class="epos-feed edit-icon ui-state-default">
+                            <div class="edit-caption">
+                                <img src="img/feed.png" alt="feed" /><br />
+                                改行
+                            </div>
+                            <div class="edit-content">
+                            </div>
+                            <div class="edit-remove">
+                                <button>削除</button>
+                            </div>
+                            <div class="edit-break"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="edit-item">
+                    <ul>
+                        <!-- ラベル紙 -->
+                        <li class="epos-feed-pos edit-icon ui-state-default">
+                            <div class="edit-caption tooltip-text">
+                                <img src="img/feed-pos.png" alt="feed-pos" /><br />
+                                ラベル紙<br />
+                                <span class="tooltip">[v2.2-] TM-L90, TM-P20, TM-P60II</span>
+                            </div>
+                            <div class="edit-content">
+                                位置
+                                <select class="attr-feed-pos">
+                                    <option value="FEED_PEELING">剥離位置</option>
+                                    <option value="FEED_CUTTING">カット位置</option>
+                                    <option value="FEED_CURRENT_TOF" selected="selected">現在のTOF</option>
+                                    <option value="FEED_NEXT_TOF">次のTOF</option>
+                                </select>
+                            </div>
+                            <div class="edit-remove">
+                                <button>削除</button>
+                            </div>
+                            <div class="edit-break"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="edit-break"></div>
+            </div>
+
+            <div class="edit-category ui-state-default ui-corner-all">
+                画像<br />
+                <div class="edit-item">
+                    <ul>
+                        <!-- ラスターイメージ -->
+                        <li class="epos-image edit-icon ui-state-default">
+                            <div class="edit-caption">
+                                <img src="img/image.png" alt="image" /><br />
+                                イメージ
+                            </div>
+                            <div class="edit-content">
+                                画像ファイル (サーバー側)<br />
+                                <input class="attr-image-file tooltip-text" type="text" size="20" value="sample.png" />
+                                <input class="attr-image-load" type="button" value="読込" />
+                                <br />
+                                <span class="tooltip">ファイルは現在のWebページと同一のドメインに存在する必要があります。</span>
+                                <img class="attr-image" src="img/default.png" alt="" />
+                                <br />
+                                <label><input class="attr-image-fit" type="checkbox" value="" />用紙幅に合わせる</label>
+                                <br />
+                                モード
+                                <select class="attr-image-mode">
+                                    <option value="MODE_MONO" selected="selected">2階調</option>
+                                    <option value="MODE_GRAY16">多階調 (対応機種のみ)</option>
+                                </select>
+                                <br />
+                                明るさ
+                                <input class="attr-image-brightness" type="text" size="5" value="1.0" /><div class="slider"></div>
+                                色指定 (2階調)
+                                <select class="attr-image-color">
+                                    <option value="COLOR_NONE">非印字</option>
+                                    <option value="COLOR_1" selected="selected">第1色</option>
+                                    <option value="COLOR_2">第2色</option>
+                                    <option value="COLOR_3">第3色</option>
+                                    <option value="COLOR_4">第4色</option>
+                                </select>
+                                <br />
+                                ハーフトーン (2階調)
+                                <select class="attr-image-halftone">
+                                    <option value="HALFTONE_DITHER">ディザー</option>
+                                    <option value="HALFTONE_ERROR_DIFFUSION" selected="selected">誤差拡散</option>
+                                    <option value="HALFTONE_THRESHOLD">しきい値</option>
+                                </select>
+                            </div>
+                            <div class="edit-remove">
+                                <button>削除</button>
+                            </div>
+                            <div class="edit-break"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="edit-item">
+                    <ul>
+                        <!-- NVロゴ -->
+                        <li class="epos-logo edit-icon ui-state-default">
+                            <div class="edit-caption">
+                                <img src="img/logo.png" alt="logo" /><br />
+                                NVロゴ
+                            </div>
+                            <div class="edit-content">
+                                キーコード1
+                                <input class="attr-logo-key1" type="text" size="5" value="48" /><div class="slider"></div>
+                                キーコード2
+                                <input class="attr-logo-key2" type="text" size="5" value="48" /><div class="slider"></div>
+                            </div>
+                            <div class="edit-remove">
+                                <button>削除</button>
+                            </div>
+                            <div class="edit-break"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="edit-break"></div>
+            </div>
+
+            <div class="edit-category ui-state-default ui-corner-all">
+                バーコード<br />
+                <div class="edit-item">
+                    <ul>
+                        <!-- バーコード -->
+                        <li class="epos-barcode edit-icon ui-state-default">
+                            <div class="edit-caption">
+                                <img src="img/barcode.png" alt="barcode" /><br />
+                                ﾊﾞｰｺｰﾄﾞ
+                            </div>
+                            <div class="edit-content">
+                                データ
+                                <input class="attr-barcode-data tooltip-text" type="text" size="20" value="12345" /><br />
+                                <span class="tooltip">16進数: '\x00'～'\xff', 水平タブ(HT): '\t', 改行(LF): '\n', 復帰(CR): '\r', バックスラッシュ: '\\'</span>
+                                種類
+                                <select class="attr-barcode-type">
+                                    <option value="BARCODE_UPC_A">UPC-A</option>
+                                    <option value="BARCODE_UPC_E">UPC-E</option>
+                                    <option value="BARCODE_EAN13">EAN13</option>
+                                    <option value="BARCODE_JAN13">JAN13</option>
+                                    <option value="BARCODE_EAN8">EAN8</option>
+                                    <option value="BARCODE_JAN8">JAN8</option>
+                                    <option value="BARCODE_CODE39" selected="selected">CODE39</option>
+                                    <option value="BARCODE_ITF">ITF</option>
+                                    <option value="BARCODE_CODABAR">CODABAR</option>
+                                    <option value="BARCODE_CODE93">CODE93</option>
+                                    <option value="BARCODE_CODE128">CODE128</option>                                  
+                                    <option value="BARCODE_GS1_128">GS1-128</option>
+                                    <option value="BARCODE_GS1_DATABAR_OMNIDIRECTIONAL">GS1 DataBar Omnidirectional</option>
+                                    <option value="BARCODE_GS1_DATABAR_TRUNCATED">GS1 DataBar Truncated</option>
+                                    <option value="BARCODE_GS1_DATABAR_LIMITED">GS1 DataBar Limited</option>
+                                    <option value="BARCODE_GS1_DATABAR_EXPANDED">GS1 Databar Expanded</option>
+                                </select>
+                                <br />
+                                HRI
+                                <select class="attr-barcode-hri">
+                                    <option value="HRI_NONE" selected="selected">印字しない</option>
+                                    <option value="HRI_ABOVE">バーコードの上</option>
+                                    <option value="HRI_BELOW">バーコードの下</option>
+                                    <option value="HRI_BOTH">バーコードの上と下の両方</option>
+                                </select>
+                                <br />
+                                フォント
+                                <select class="attr-barcode-font">
+                                    <option value="FONT_A" selected="selected">フォントA</option>
+                                    <option value="FONT_B">フォントB</option>
+                                    <option value="FONT_C">フォントC</option>
+                                    <option value="FONT_D">フォントD [v2.6-]</option>
+                                    <option value="FONT_E">フォントE [v2.6-]</option>
+                                    <option value="FONT_SPECIAL_A">スペシャルフォントA</option>
+                                    <option value="FONT_SPECIAL_B">スペシャルフォントB</option>
+                                </select>
+                                <br />
+                                モジュール幅
+                                <input class="attr-barcode-width" type="text" size="5" value="2" /> dots<div class="slider"></div>
+                                モジュール高さ
+                                <input class="attr-barcode-height" type="text" size="5" value="32" /> dots<div class="slider"></div>
+                            </div>
+                            <div class="edit-remove">
+                                <button>削除</button>
+                            </div>
+                            <div class="edit-break"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="edit-item">
+                    <ul>
+                        <!-- 二次元コード -->
+                        <li class="epos-symbol edit-icon ui-state-default">
+                            <div class="edit-caption">
+                                <img src="img/symbol.png" alt="symbol" /><br />
+                                二次元
+                            </div>
+                            <div class="edit-content">
+                                データ
+                                <input class="attr-symbol-data tooltip-text" type="text" size="20" value="http://www.epson.jp/" /><br />
+                                <span class="tooltip">16進数: '\x00'～'\xff', 水平タブ(HT): '\t', 改行(LF): '\n', 復帰(CR): '\r', バックスラッシュ: '\\'</span>
+                                種類
+                                <select class="attr-symbol-type">
+                                    <option value="SYMBOL_PDF417_STANDARD">Standard PDF417</option>
+                                    <option value="SYMBOL_PDF417_TRUNCATED">Truncated PDF417</option>
+                                    <option value="SYMBOL_QRCODE_MODEL_1">QR Code Model 1</option>
+                                    <option value="SYMBOL_QRCODE_MODEL_2" selected="selected">QR Code Model 2</option>
+                                    <option value="SYMBOL_QRCODE_MICRO">Micro QR Code [v2.6-]</option>
+                                    <option value="SYMBOL_MAXICODE_MODE_2">MaxiCode Mode 2</option>
+                                    <option value="SYMBOL_MAXICODE_MODE_3">MaxiCode Mode 3</option>
+                                    <option value="SYMBOL_MAXICODE_MODE_4">MaxiCode Mode 4</option>
+                                    <option value="SYMBOL_MAXICODE_MODE_5">MaxiCode Mode 5</option>
+                                    <option value="SYMBOL_MAXICODE_MODE_6">MaxiCode Mode 6</option>
+                                    <option value="SYMBOL_GS1_DATABAR_STACKED">GS1 DataBar Stacked</option>
+                                    <option value="SYMBOL_GS1_DATABAR_STACKED_OMNIDIRECTIONAL">GS1 DataBar Stacked Omnidirectional</option>
+                                    <option value="SYMBOL_GS1_DATABAR_EXPANDED_STACKED">GS1 DataBar Expanded Stacked</option>
+                                    <option value="SYMBOL_AZTECCODE_FULLRANGE">Aztec Code Full-Range [v2.2-]</option>
+                                    <option value="SYMBOL_AZTECCODE_COMPACT">Aztec Code Compact [v2.2-]</option>
+                                    <option value="SYMBOL_DATAMATRIX_SQUARE">DataMatrix Square [v2.2-]</option>
+                                    <option value="SYMBOL_DATAMATRIX_RECTANGLE_8">DataMatrix Rectangle (Row=8) [v2.2-]</option>
+                                    <option value="SYMBOL_DATAMATRIX_RECTANGLE_12">DataMatrix Rectangle (Row=12) [v2.2-]</option>
+                                    <option value="SYMBOL_DATAMATRIX_RECTANGLE_16">DataMatrix Rectangle (Row=16) [v2.2-]</option>
+                                </select>
+                                <br />
+                                エラー訂正レベル
+                                <select class="attr-symbol-level-enum">
+                                    <option value="LEVEL_0">PDF417 レベル0</option>
+                                    <option value="LEVEL_1">PDF417 レベル1</option>
+                                    <option value="LEVEL_2">PDF417 レベル2</option>
+                                    <option value="LEVEL_3">PDF417 レベル3</option>
+                                    <option value="LEVEL_4">PDF417 レベル4</option>
+                                    <option value="LEVEL_5">PDF417 レベル5</option>
+                                    <option value="LEVEL_6">PDF417 レベル6</option>
+                                    <option value="LEVEL_7">PDF417 レベル7</option>
+                                    <option value="LEVEL_8">PDF417 レベル8</option>
+                                    <option value="LEVEL_L">QR Code レベルL</option>
+                                    <option value="LEVEL_M">QR Code レベルM</option>
+                                    <option value="LEVEL_Q">QR Code レベルQ</option>
+                                    <option value="LEVEL_H">QR Code レベルH</option>
+                                    <option value="LEVEL_DEFAULT" selected="selected">既定レベル</option>
+                                </select>
+                                <br />
+                                エラー訂正レベル (Aztec Code)
+                                <input class="attr-symbol-level" type="text" size="5" value="23" /><div class="slider"></div>
+                                モジュール幅
+                                <input class="attr-symbol-width" type="text" size="5" value="3" /> dots<div class="slider"></div>
+                                モジュール高さ (PDF417)
+                                <input class="attr-symbol-height" type="text" size="5" value="0" /> 倍<div class="slider"></div>
+                                コードの大きさ (PDF417, GS1 DataBar)
+                                <input class="attr-symbol-size" type="text" size="5" value="0" /> columns, dots<div class="slider"></div>
+                            </div>
+                            <div class="edit-remove">
+                                <button>削除</button>
+                            </div>
+                            <div class="edit-break"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="edit-break"></div>
+            </div>
+
+            <div class="edit-category ui-state-default ui-corner-all">
+                罫線<br />
+                <div class="edit-item">
+                    <ul>
+                        <!-- 横罫線 -->
+                        <li class="epos-hline edit-icon ui-state-default">
+                            <div class="edit-caption tooltip-text">
+                                <img src="img/hline.png" alt="hline" /><br />
+                                横線<br />
+                                <span class="tooltip">TM-T90KP</span>
+                            </div>
+                            <div class="edit-content">
+                                開始位置
+                                <input class="attr-hline-x1" type="text" size="5" value="0" /> dots<div class="slider"></div>
+                                終了位置
+                                <input class="attr-hline-x2" type="text" size="5" value="575" /> dots<div class="slider"></div>
+                                線の種類
+                                <select class="attr-hline-style">
+                                    <option value="LINE_THIN" selected="selected">実線：細</option>
+                                    <option value="LINE_MEDIUM">実線：中太</option>
+                                    <option value="LINE_THICK">実線：太</option>
+                                    <option value="LINE_THIN_DOUBLE">二重線：細</option>
+                                    <option value="LINE_MEDIUM_DOUBLE">二重線：中太</option>
+                                    <option value="LINE_THICK_DOUBLE">二重線：太</option>
+                                </select>
+                            </div>
+                            <div class="edit-remove">
+                                <button>削除</button>
+                            </div>
+                            <div class="edit-break"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="edit-item">
+                    <ul>
+                        <!-- 縦罫線開始 -->
+                        <li class="epos-vline-begin edit-icon ui-state-default">
+                            <div class="edit-caption tooltip-text">
+                                <img src="img/vline-begin.png" alt="vline-begin" /><br />
+                                縦線始<br />
+                                <span class="tooltip">TM-T90KP</span>
+                            </div>
+                            <div class="edit-content">
+                                位置
+                                <input class="attr-vline-x" type="text" size="5" value="0" /> dots<div class="slider"></div>
+                                線の種類
+                                <select class="attr-vline-style">
+                                    <option value="LINE_THIN" selected="selected">実線：細</option>
+                                    <option value="LINE_MEDIUM">実線：中太</option>
+                                    <option value="LINE_THICK">実線：太</option>
+                                    <option value="LINE_THIN_DOUBLE">二重線：細</option>
+                                    <option value="LINE_MEDIUM_DOUBLE">二重線：中太</option>
+                                    <option value="LINE_THICK_DOUBLE">二重線：太</option>
+                                </select>
+                            </div>
+                            <div class="edit-remove">
+                                <button>削除</button>
+                            </div>
+                            <div class="edit-break"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="edit-item">
+                    <ul>
+                        <!-- 縦罫線終了 -->
+                        <li class="epos-vline-end edit-icon ui-state-default">
+                            <div class="edit-caption tooltip-text">
+                                <img src="img/vline-end.png" alt="vline-end" /><br />
+                                縦線終<br />
+                                <span class="tooltip">TM-T90KP</span>
+                            </div>
+                            <div class="edit-content">
+                                位置
+                                <input class="attr-vline-x" type="text" size="5" value="0" /> dots<div class="slider"></div>
+                                線の種類
+                                <select class="attr-vline-style">
+                                    <option value="LINE_THIN" selected="selected">実線：細</option>
+                                    <option value="LINE_MEDIUM">実線：中太</option>
+                                    <option value="LINE_THICK">実線：太</option>
+                                    <option value="LINE_THIN_DOUBLE">二重線：細</option>
+                                    <option value="LINE_MEDIUM_DOUBLE">二重線：中太</option>
+                                    <option value="LINE_THICK_DOUBLE">二重線：太</option>
+                                </select>
+                            </div>
+                            <div class="edit-remove">
+                                <button>削除</button>
+                            </div>
+                            <div class="edit-break"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="edit-break"></div>
+            </div>
+
+            <div class="edit-category ui-state-default ui-corner-all">
+                ページモード<br />
+                <div class="edit-item">
+                    <ul>
+                        <!-- 開始 -->
+                        <li class="epos-page-begin edit-icon ui-state-default">
+                            <div class="edit-caption">
+                                <img src="img/page-begin.png" alt="page-begin" /><br />
+                                ページ始
+                            </div>
+                            <div class="edit-content">
+                            </div>
+                            <div class="edit-remove">
+                                <button>削除</button>
+                            </div>
+                            <div class="edit-break"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="edit-item">
+                    <ul>
+                        <!-- 印字領域 -->
+                        <li class="epos-area edit-icon ui-state-default">
+                            <div class="edit-caption">
+                                <img src="img/area.png" alt="area" /><br />
+                                印字領域
+                            </div>
+                            <div class="edit-content">
+                                横方向原点
+                                <input class="attr-area-x" type="text" size="5" value="0" /> dots<div class="slider"></div>
+                                縦方向原点
+                                <input class="attr-area-y" type="text" size="5" value="0" /> dots<div class="slider"></div>
+                                幅
+                                <input class="attr-area-width" type="text" size="5" value="100" /> dots<div class="slider"></div>
+                                高さ
+                                <input class="attr-area-height" type="text" size="5" value="100" /> dots<div class="slider"></div>
+                            </div>
+                            <div class="edit-remove">
+                                <button>削除</button>
+                            </div>
+                            <div class="edit-break"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="edit-item">
+                    <ul>
+                        <!-- 印字方向 -->
+                        <li class="epos-direction edit-icon ui-state-default">
+                            <div class="edit-caption">
+                                <img src="img/direction.png" alt="direction" /><br />
+                                印字方向
+                            </div>
+                            <div class="edit-content">
+                                方向
+                                <select class="attr-direction-dir">
+                                    <option value="DIRECTION_LEFT_TO_RIGHT" selected="selected">左→右</option>
+                                    <option value="DIRECTION_TOP_TO_BOTTOM">上→下</option>
+                                    <option value="DIRECTION_RIGHT_TO_LEFT">右→左</option>
+                                    <option value="DIRECTION_BOTTOM_TO_TOP">下→上</option>
+                                </select>
+                            </div>
+                            <div class="edit-remove">
+                                <button>削除</button>
+                            </div>
+                            <div class="edit-break"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="edit-item">
+                    <ul>
+                        <!-- 印字位置 -->
+                        <li class="epos-position edit-icon ui-state-default">
+                            <div class="edit-caption">
+                                <img src="img/position.png" alt="position" /><br />
+                                印字位置
+                            </div>
+                            <div class="edit-content">
+                                横方向位置
+                                <input class="attr-position-x" type="text" size="5" value="0" /> dots<div class="slider"></div>
+                                縦方向位置
+                                <input class="attr-position-y" type="text" size="5" value="21" /> dots<div class="slider"></div>
+                            </div>
+                            <div class="edit-remove">
+                                <button>削除</button>
+                            </div>
+                            <div class="edit-break"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="edit-item">
+                    <ul>
+                        <!-- 直線 -->
+                        <li class="epos-line edit-icon ui-state-default">
+                            <div class="edit-caption tooltip-text">
+                                <img src="img/line.png" alt="line" /><br />
+                                直線<br />
+                                <span class="tooltip">TM-T88VI, TM-T90KP, TM-P60II, TM-P80, TM-P20, TM-T20III, TM-m10, TM-m30, TM-m30II, TM-m30-H</span>                                
+                            </div>
+                            <div class="edit-content">
+                                横方向開始位置
+                                <input class="attr-line-x1" type="text" size="5" value="0" /> dots<div class="slider"></div>
+                                縦方向開始位置
+                                <input class="attr-line-y1" type="text" size="5" value="50" /> dots<div class="slider"></div>
+                                横方向終了位置
+                                <input class="attr-line-x2" type="text" size="5" value="99" /> dots<div class="slider"></div>
+                                縦方向終了位置
+                                <input class="attr-line-y2" type="text" size="5" value="50" /> dots<div class="slider"></div>
+                                線の種類
+                                <select class="attr-line-style">
+                                    <option value="LINE_THIN" selected="selected">実線：細</option>
+                                    <option value="LINE_MEDIUM">実線：中太</option>
+                                    <option value="LINE_THICK">実線：太</option>
+                                    <option value="LINE_THIN_DOUBLE">二重線：細</option>
+                                    <option value="LINE_MEDIUM_DOUBLE">二重線：中太</option>
+                                    <option value="LINE_THICK_DOUBLE">二重線：太</option>
+                                </select>
+                            </div>
+                            <div class="edit-remove">
+                                <button>削除</button>
+                            </div>
+                            <div class="edit-break"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="edit-item">
+                    <ul>
+                        <!-- 長方形 -->
+                        <li class="epos-rectangle edit-icon ui-state-default">
+                            <div class="edit-caption tooltip-text">
+                                <img src="img/rectangle.png" alt="rectangle" /><br />
+                                長方形<br />
+                                <span class="tooltip">TM-T88VI, TM-T90KP, TM-P60II, TM-P80, TM-P20, TM-T20III, TM-m10, TM-m30, TM-m30II, TM-m30-H</span>                                
+                            </div>
+                            <div class="edit-content">
+                                横方向開始位置
+                                <input class="attr-rectangle-x1" type="text" size="5" value="0" /> dots<div class="slider"></div>
+                                縦方向開始位置
+                                <input class="attr-rectangle-y1" type="text" size="5" value="0" /> dots<div class="slider"></div>
+                                横方向終了位置
+                                <input class="attr-rectangle-x2" type="text" size="5" value="99" /> dots<div class="slider"></div>
+                                縦方向終了位置
+                                <input class="attr-rectangle-y2" type="text" size="5" value="99" /> dots<div class="slider"></div>
+                                線の種類
+                                <select class="attr-rectangle-style">
+                                    <option value="LINE_THIN" selected="selected">実線：細</option>
+                                    <option value="LINE_MEDIUM">実線：中太</option>
+                                    <option value="LINE_THICK">実線：太</option>
+                                    <option value="LINE_THIN_DOUBLE">二重線：細</option>
+                                    <option value="LINE_MEDIUM_DOUBLE">二重線：中太</option>
+                                    <option value="LINE_THICK_DOUBLE">二重線：太</option>
+                                </select>
+                            </div>
+                            <div class="edit-remove">
+                                <button>削除</button>
+                            </div>
+                            <div class="edit-break"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="edit-item">
+                    <ul>
+                        <!-- 終了 -->
+                        <li class="epos-page-end edit-icon ui-state-default">
+                            <div class="edit-caption">
+                                <img src="img/page-end.png" alt="page-end" /><br />
+                                ページ終
+                            </div>
+                            <div class="edit-content">
+                            </div>
+                            <div class="edit-remove">
+                                <button>削除</button>
+                            </div>
+                            <div class="edit-break"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="edit-break"></div>
+            </div>
+
+            <div class="edit-category ui-state-default ui-corner-all">
+                    まとめ印刷<br />
+                    <div class="edit-item">
+                        <ul>
+                            <!-- 反転印刷 開始 -->
+                            <li class="epos-rotate-begin edit-icon ui-state-default">
+                                <div class="edit-caption tooltip-text">
+                                    <img src="img/rotate-begin.png" alt="rotate-begin" /><br />
+                                    反転始<br />
+                                    <span class="tooltip">TM-m30II, TM-m30-H</span>
+                                </div>
+                                <div class="edit-remove">
+                                    <button>削除</button>
+                                </div>
+                                <div class="edit-break"></div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="edit-item">
+                        <ul>
+                            <!-- 反転印刷 終了 -->
+                            <li class="epos-rotate-end edit-icon ui-state-default">
+                                <div class="edit-caption tooltip-text">
+                                    <img src="img/rotate-end.png" alt="rotate-end" /><br />
+                                    反転終<br />
+                                    <span class="tooltip">TM-m30II, TM-m30-H</span>
+                                </div>
+                                <div class="edit-remove">
+                                    <button>削除</button>
+                                </div>
+                                <div class="edit-break"></div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="edit-break"></div>
+                </div>
+    
+                <div class="edit-category ui-state-default ui-corner-all">                
+
+                その他<br />
+                <div class="edit-item">
+                    <ul>
+                        <!-- 用紙カット -->
+                        <li class="epos-cut edit-icon ui-state-default">
+                            <div class="edit-caption">
+                                <img src="img/cut.png" alt="cut" /><br />
+                                用紙ｶｯﾄ
+                            </div>
+                            <div class="edit-content">
+                                種類
+                                <select class="attr-cut-type">
+                                    <option value="CUT_NO_FEED">フィード無しカット</option>
+                                    <option value="CUT_FEED" selected="selected">フィードカット</option>
+                                    <option value="CUT_RESERVE">カット予約</option>
+                                </select>
+                            </div>
+                            <div class="edit-remove">
+                                <button>削除</button>
+                            </div>
+                            <div class="edit-break"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="edit-item">
+                    <ul>
+                        <!-- ドロアーキック -->
+                        <li class="epos-pulse edit-icon ui-state-default">
+                            <div class="edit-caption">
+                                <img src="img/pulse.png" alt="pulse" /><br />
+                                ﾄﾞﾛｱｰｷｯｸ
+                            </div>
+                            <div class="edit-content">
+                                コネクター
+                                <select class="attr-pulse-drawer">
+                                    <option value="DRAWER_1" selected="selected">2番ピン</option>
+                                    <option value="DRAWER_2">5番ピン</option>
+                                </select>
+                                <br />
+                                時間
+                                <select class="attr-pulse-time">
+                                    <option value="PULSE_100" selected="selected">100 ms</option>
+                                    <option value="PULSE_200">200 ms</option>
+                                    <option value="PULSE_300">300 ms</option>
+                                    <option value="PULSE_400">400 ms</option>
+                                    <option value="PULSE_500">500 ms</option>
+                                </select>
+                            </div>
+                            <div class="edit-remove">
+                                <button>削除</button>
+                            </div>
+                            <div class="edit-break"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="edit-item">
+                    <ul>
+                        <!-- ブザー -->
+                        <li class="epos-sound edit-icon ui-state-default">
+                            <div class="edit-caption tooltip-text">
+                                <img src="img/sound.png" alt="sound" /><br />
+                                ブザー
+                                <span class="tooltip">TM-T88VI, TM-T88V, TM-T70II, TM-T90KP, TM-P60II, TM-P80, TM-P20, TM-T20II, TM-T20III, TM-m10, TM-m30, TM-m30II, TM-m30-H</span>                                
+                            </div>
+                            <div class="edit-content">
+                                パターン
+                                <select class="attr-sound-pattern">
+                                    <option value="PATTERN_NONE">停止</option>
+                                    <option value="PATTERN_0">パターン0 [v5.0-]</option>
+                                    <option value="PATTERN_1">パターン1 [v2.2-]</option>
+                                    <option value="PATTERN_2">パターン2 [v2.2-]</option>
+                                    <option value="PATTERN_3">パターン3 [v2.2-]</option>
+                                    <option value="PATTERN_4">パターン4 [v2.2-]</option>
+                                    <option value="PATTERN_5">パターン5 [v2.2-]</option>
+                                    <option value="PATTERN_6">パターン6 [v2.2-]</option>
+                                    <option value="PATTERN_7">パターン7 [v2.2-]</option>
+                                    <option value="PATTERN_8">パターン8 [v2.2-]</option>
+                                    <option value="PATTERN_9">パターン9 [v2.2-]</option>
+                                    <option value="PATTERN_10">パターン10 [v2.2-]</option>
+                                    <option value="PATTERN_A" selected="selected">パターンA</option>
+                                    <option value="PATTERN_B">パターンB</option>
+                                    <option value="PATTERN_C">パターンC</option>
+                                    <option value="PATTERN_D">パターンD</option>
+                                    <option value="PATTERN_E">パターンE</option>
+                                    <option value="PATTERN_ERROR">エラー鳴動パターン</option>
+                                    <option value="PATTERN_PAPER_END">紙無しパターン</option>
+                                </select>
+                                <br />
+                                繰り返し回数
+                                <input class="attr-sound-repeat" type="text" size="5" value="1" /><div class="slider"></div>
+                                周期 (パターン 1-10)
+                                <input class="attr-sound-cycle" type="text" size="5" value="1000" /> ms<div class="slider"></div>
+                            </div>
+                            <div class="edit-remove">
+                                <button>削除</button>
+                            </div>
+                            <div class="edit-break"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="edit-item">
+                    <ul>
+                        <!-- 用紙レイアウト -->
+                        <li class="epos-layout edit-icon ui-state-default">
+                            <div class="edit-caption tooltip-text">
+                                <img src="img/layout.png" alt="layout" /><br />
+                                ﾚｲｱｳﾄ
+                                <span class="tooltip">[v2.2-] TM-P20, TM-P60II</span>
+                            </div>
+                            <div class="edit-content">
+                                用紙種類
+                                <select class="attr-layout-type">
+                                    <option value="LAYOUT_RECEIPT" selected="selected">レシート紙</option>
+                                    <option value="LAYOUT_RECEIPT_BM">レシート紙 (ブラックマークあり)</option>
+                                    <option value="LAYOUT_LABEL">ダイカットラベル紙</option>
+                                    <option value="LAYOUT_LABEL_BM">ダイカットラベル紙 (ブラックマークあり)</option>
+                                </select>
+                                <br />
+                                紙幅 (台紙幅) (sf)
+                                <input class="attr-layout-width" type="text" size="5" value="58.0" /> mm<div class="slider"></div>
+                                高さ (sa)
+                                <label><input class="attr-layout-height-auto" type="radio" checked="checked" />自動</label>
+                                <label><input class="attr-layout-height-auto" type="radio" />手動</label>
+                                <input class="attr-layout-height" type="text" size="5" value="28.4" /> mm<div class="slider"></div>
+                                上余白 (sb)
+                                <input class="attr-layout-margin-top" type="text" size="5" value="0.0" /> mm<div class="slider"></div>
+                                下余白 (se)
+                                <input class="attr-layout-margin-bottom" type="text" size="5" value="0.0" /> mm<div class="slider"></div>
+                                カット位置 (sc)
+                                <input class="attr-layout-offset-cut" type="text" size="5" value="0.0" /> mm<div class="slider"></div>
+                                ラベル下端位置 (sd)
+                                <input class="attr-layout-offset-label" type="text" size="5" value="0.0" /> mm<div class="slider"></div>
+                            </div>
+                            <div class="edit-remove">
+                                <button>Delete</button>
+                            </div>
+                            <div class="edit-break"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="edit-item">
+                    <ul>
+                        <!-- エラー復帰 -->
+                        <li class="epos-recovery edit-icon ui-state-default">
+                            <div class="edit-caption tooltip-text">
+                                <img src="img/recovery.png" alt="recovery" /><br />
+                                ｴﾗｰ復帰
+                                <span class="tooltip">[v2.2-]</span>
+                            </div>
+                            <div class="edit-content">
+                            </div>
+                            <div class="edit-remove">
+                                <button>削除</button>
+                            </div>
+                            <div class="edit-break"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="edit-item">
+                    <ul>
+                        <!-- リセット -->
+                        <li class="epos-reset edit-icon ui-state-default">
+                            <div class="edit-caption tooltip-text">
+                                <img src="img/reset.png" alt="reset" /><br />
+                                リセット
+                                <span class="tooltip">[v2.2-]</span>
+                            </div>
+                            <div class="edit-content">
+                            </div>
+                            <div class="edit-remove">
+                                <button>削除</button>
+                            </div>
+                            <div class="edit-break"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="edit-item">
+                    <ul>
+                        <!-- コマンド -->
+                        <li class="epos-command edit-icon ui-state-default">
+                            <div class="edit-caption">
+                                <img src="img/command.png" alt="command" /><br />
+                                コマンド
+                            </div>
+                            <div class="edit-content">
+                                <input class="attr-command-data tooltip-text" type="text" value="\x1b*\x21\x01\x00\x55\x55\x55\n" /><br />
+                                <span class="tooltip">16進数: '\x00'～'\xff', 水平タブ(HT): '\t', 改行(LF): '\n', 復帰(CR): '\r', バックスラッシュ: '\\'</span>
+                            </div>
+                            <div class="edit-remove">
+                                <button>削除</button>
+                            </div>
+                            <div class="edit-break"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="edit-break"></div>
+            </div>
+        </div>
+
+        <div id="edit-right">
+            <ul id="edit-sequence">
+            </ul>
+            <div id="edit-button">
+                <input id="edit-force" type="checkbox" /><label class="edit-label" for="edit-force">強制送信</label>
+                <button id="edit-import">インポート</button>
+                <button id="edit-clear">消去</button>
+            </div>
+        </div>
+
+        <div class="edit-break"></div>
+
+    </div>
+
+    <div id="import" title="インポート">
+        <p>
+            インポートするデータ<br />
+            <textarea id="import-doc" cols="30" rows="10" placeholder="&lt;epos-print xmlns=&quot;http://www.epson-pos.com/schemas/2011/03/epos-print&quot;&gt;&lt;text lang=&quot;ja&quot; smooth=&quot;true&quot;&gt;こんにちは&lt;/text&gt;&lt;feed /&gt;&lt;/epos-print&gt;"></textarea><br />
+            <button id="import-apply">適用</button>
+        </p>
+        <p>
+            情報<br />
+            <textarea id="import-info" cols="30" rows="8"></textarea><br />
+        </p>
+    </div>
+
+    <div id="import-confirm" title="確認">
+        <p>編集中のデータは消去されます。続行しますか?</p>
+    </div>
+
+    <div id="edit-confirm" title="確認">
+        <p>編集中のデータを消去しますか?</p>
+    </div>
+
+    <div id="edit-error" title="エラー">
+        <p id="edit-info"></p>
+    </div>
+
+    <div id="preview">
+        <div id="preview-paper">
+            <div id="preview-width">
+                <span>512</span><br />
+                <img src="img/v.png" alt="" /><img src="img/h.png" width="510" height="10" alt="" /><img src="img/v.png" alt="" /><br />
+            </div>
+        </div>
+        <div class="preview-break"></div>
+        <canvas id="preview-rotate" width="576" height="2400"></canvas>        
+        <canvas class="preview-line" id="preview-line" width="1" height="1"></canvas>
+        <canvas id="preview-text" width="576" height="192"></canvas>
+        <canvas id="preview-page" width="576" height="2400"></canvas>
+        <canvas id="preview-area" width="576" height="2400"></canvas>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <div id="preview-info">
+            実際のプリンターの印刷結果は、プレビューのイメージと異なる場合があります。
+        </div>
+    </div>
+
+    <div id="api">
+        <p>
+            API サンプルコード
+            <textarea id="api-code" cols="60" rows="30"></textarea>
+        </p>
+    </div>
+
+    <div id="xml">
+        <p>
+            XML 印刷ドキュメント<br />
+            <textarea id="xml-doc" cols="60" rows="30"></textarea>
+        </p>
+    </div>
+
+    <div id="print">
+        <p>
+            送信するデータ<br />
+            <textarea id="print-doc" cols="60" rows="12"></textarea><br />
+            <button id="print-send">送信</button>
+        </p>
+        <p>
+            情報<br />
+            <textarea id="print-info" cols="60" rows="10"></textarea><br />
+            <button id="print-clear">消去</button>
+        </p>
+    </div>
+
+    <div id="setting">
+        <h3>プレビュー</h3>
+        <p>
+            機種、紙幅 (台紙幅)<br />
+            <select id="setting-model">
+                    <option value="tm_t88_80" selected="selected">TM-T88 series (80mm)</option>
+                    <option value="tm_t88_58">TM-T88 series (58mm)</option>
+                    <option value="tm_t70_80">TM-T70 series(80mm)</option>
+                    <option value="tm_t70_58">TM-T70 series(58mm)</option>
+                    <option value="tm_t90_80">TM-T90 series(80mm)</option>
+                    <option value="tm_t90_58">TM-T90 series(58mm)</option>
+                    <option value="tm_t90_kp">TM-T90KP (80mm)</option>
+                    <option value="tm_l90_re">TM-L90 (Receipt)</option>
+                    <option value="tm_l90_la">TM-L90 (Label)</option>
+                    <option value="tm_p60_60">TM-P60 series (60mm)</option>
+                    <option value="tm_p60_58">TM-P60 series (58mm)</option>
+                    <option value="tm_p60_la">TM-P60 series (Label)</option>
+                    <option value="tm_p80_48">TM-P80 series (80mm)</option>
+                    <option value="tm_p80_42">TM-P80 series (80mm, 42 column mode)</option>
+                    <option value="tm_p20_58">TM-P20 series (58mm)</option>
+                    <option value="tm_t20_80">TM-T20 series (80mm)</option>
+                    <option value="tm_t20_58">TM-T20 series (58mm)</option>
+                    <option value="tm_m10_58">TM-m10 series (58mm)</option>
+                    <option value="tm_m30_80">TM-m30 series (80mm)</option>
+                    <option value="tm_m30_58">TM-m30 series (58mm)</option>
+            </select>
+            <span class="hidden">
+                <input id="setting-width" type="text" maxlength="2" size="2" value="80" />mm
+            </span>
+        </p>
+        <br />
+        <h3>印刷</h3>
+        <p>
+            プリンターのIPアドレス<br />
+            <input id="setting-ipaddr" type="text" value="192.168.192.168" />
+        </p>
+        <p>
+            ポート番号<br />
+            <input id="setting-port" type="text" value="8008" />
+        </p>
+        <p>
+            印刷するプリンターのデバイスID<br />
+            <input id="setting-devid" type="text" value="local_printer" />
+        </p>
+        <p>
+            印刷タイムアウト (ミリ秒単位)<br />
+            <input id="setting-timeout" type="text" value="60000" />
+        </p>
+        <p>
+            <input id="setting-status" type="checkbox" /><label for="setting-status">ステータスを監視する</label><br />
+            &nbsp;&nbsp;&nbsp;ドロアーオープンの信号状態
+            <select id="setting-drawer">
+                <option value="low" selected="selected">Low</option>
+                <option value="high">High</option>
+            </select>
+        </p>
+        <p>
+            <input id="setting-jobid" type="checkbox" /><label for="setting-jobid">印刷ジョブIDを使う [v2.6-]</label>
+        </p>
+        <br />
+        <br />
+        <br />
+        <br />
+        <div id="setting-version">
+            Receipt Designer for ePOS SDK Copyright Seiko Epson Corporation 2016 - 2020 All rights reserved.<br />
+            This web page is using <a href="http://jqueryui.com/">jQuery UI</a> and <a href="http://touchpunch.furf.com/">jQuery UI Touch Punch</a>.<br />
+        </div>
+    </div>
+
+    <canvas class="hidden" id="epos-image" width="1" height="1"></canvas>
+
+</div>
+
+</body>
+</html>
