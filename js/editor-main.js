@@ -478,3 +478,26 @@ function slider(d, b, a, c) {
         }
     })
 };
+
+
+
+// hotkey listen to update change
+
+var keys = {};
+
+$(document).keydown(function (e) {
+    keys[e.which] = true;
+
+    if (keys[17] && keys[83]) { // Ctrl + Alt + 1 in that order
+        console.log("pressed");
+        event.preventDefault();
+        updateAll();
+        return false;
+    } else {
+        return true;
+    }
+});
+
+$(document).keyup(function (e) {
+    delete keys[e.which];
+});
