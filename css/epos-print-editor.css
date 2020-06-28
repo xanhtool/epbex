@@ -80,6 +80,8 @@ textarea {
     float: left;
     width: 25%;
     position: fixed;
+    top: 5rem!important;
+    left: 1.5rem;
 }
 #edit-right {
     float: left;
@@ -88,7 +90,10 @@ textarea {
 }
 #edit-preview {
     float: right;
-    width: 33%;
+    width: 28%;
+    position: fixed;
+    top: 5rem!important;
+    right: 1rem;
 }
 #edit-sequence {
     background-color: #c0c0c0;
