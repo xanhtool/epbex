@@ -137,8 +137,9 @@ $(function () {
     });
 
     $("#print-now").button().click(function () {
-        setPrintDoc(getXmlDoc());
-        sendPrintDoc()
+        // setPrintDoc(getXmlDoc());
+        // sendPrintDoc();
+        getAndPrint();
     });
 
     $("#edit-left").disableSelection().draggable({
@@ -357,6 +358,11 @@ function updateAll() {
     setXmlDoc();
 }
 
+function getAndPrint() {
+    setPrintDoc(getXmlDoc());
+    sendPrintDoc()
+}
+
 function extract(a) {
     a.find("button").button({
         icons: {
@@ -489,10 +495,14 @@ $(document).keydown(function (e) {
     keys[e.which] = true;
 
     if (keys[17] && keys[83]) { // Ctrl + Alt + 1 in that order
-        console.log("pressed");
+        console.log("save");
         event.preventDefault();
         updateAll();
         return false;
+    } else if (keys[17] && keys[80]) {
+        console.log("print");
+        event.preventDefault();
+        getAndPrint();
     } else {
         return true;
     }
